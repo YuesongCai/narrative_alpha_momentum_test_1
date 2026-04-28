@@ -3,15 +3,17 @@
     "source_id": "S1",
     "source_name": "Bernstein Research",
     "source_tier": 1,
+    "source_format": "pdf",
     "published_on": "2026-04-25",
     "headline": "Inference GPU utilization and cost deflation entering a new phase",
-    "summary": "Analysts argue inference stack optimization will lower enterprise AI costs.",
+    "summary": "Analysts argue inference stack optimization can reduce serving cost by 30%.",
     "entities": ["CRDO", "ANET", "NVIDIA"]
   },
   {
     "source_id": "S2",
     "source_name": "The Information",
     "source_tier": 2,
+    "source_format": "article",
     "published_on": "2026-04-27",
     "headline": "AI inference vendors chase lower serving costs",
     "summary": "Cloud buyers prioritize inference efficiency over training scale.",
@@ -21,6 +23,7 @@
     "source_id": "S3",
     "source_name": "Nikkei Asia",
     "source_tier": 2,
+    "source_format": "article",
     "published_on": "2026-04-26",
     "headline": "Japan semiconductor capex accelerates with new fab commitments",
     "summary": "Japan policy and private investment lift semiconductor ecosystem spending.",
@@ -30,6 +33,7 @@
     "source_id": "S4",
     "source_name": "Industry Expert Roundtable",
     "source_tier": 1,
+    "source_format": "audio",
     "published_on": "2026-04-24",
     "headline": "Nuclear fuel contracting cycle tightens",
     "summary": "Utilities are extending uranium contracts amid power-demand growth.",
@@ -39,9 +43,40 @@
     "source_id": "S5",
     "source_name": "FinTwit",
     "source_tier": 3,
+    "source_format": "social",
     "published_on": "2026-04-28",
     "headline": "Nuclear is back trade everywhere",
     "summary": "High social chatter around nuclear equities after policy headlines.",
     "entities": ["CCJ"]
+  },
+  {
+    "source_id": "S6",
+    "source_name": "Energy Bank Thematics",
+    "source_tier": 1,
+    "source_format": "pdf",
+    "published_on": "2026-04-23",
+    "headline": "AI data-center power grid bottleneck: 12GW incremental demand by 2028",
+    "summary": "Power and grid investment must accelerate to avoid capacity constraints.",
+    "entities": ["VST", "CEG"]
+  },
+  {
+    "source_id": "S7",
+    "source_name": "Bloomberg",
+    "source_tier": 2,
+    "source_format": "article",
+    "published_on": "2026-04-27",
+    "headline": "Utilities see power demand jump from AI infrastructure",
+    "summary": "Developers cite growing grid constraints in major data-center regions.",
+    "entities": ["VST", "CEG", "AMZN"]
+  },
+  {
+    "source_id": "S8",
+    "source_name": "Reddit",
+    "source_tier": 3,
+    "source_format": "social",
+    "published_on": "2026-04-28",
+    "headline": "Meme battery moonshot narrative",
+    "summary": "No primary research, mostly hype.",
+    "entities": ["XYZ"]
   }
 ]

@@ -18,6 +18,7 @@ def load_sources(path: Path) -> list[SourceItem]:
                 source_id=row["source_id"],
                 source_name=row["source_name"],
                 source_tier=int(row["source_tier"]),
+                source_format=row.get("source_format", "article"),
                 published_on=date.fromisoformat(row["published_on"]),
                 headline=row["headline"],
                 summary=row["summary"],
@@ -36,38 +37,59 @@ def load_price_csv(path: Path) -> dict[str, float]:
     return prices
 
 
-def render_markdown_digest(narratives: list[Narrative], as_of: date) -> str:
-    emerging = sum(1 for n in narratives if n.stage.value == "Emerging")
-    strengthening = sum(1 for n in narratives if n.stage.value == "Strengthening")
-    consensus = sum(1 for n in narratives if n.stage.value == "Consensus")
+def render_markdown_digest(narratives: list[Narrative], as_of: date, changed_last_24h: bool = True) -> str:
+    if not changed_last_24h:
+        return f"# Narrative Alpha Daily Scan — {as_of.isoformat()}\n\nNo significant narrative developments today."
+
+    stage_counts = {
+        "Emerging": sum(1 for n in narratives if n.propagation_stage.value == "Emerging"),
+        "Strengthening": sum(1 for n in narratives if n.propagation_stage.value == "Strengthening"),
+        "Consensus": sum(1 for n in narratives if n.propagation_stage.value == "Consensus"),
+    }
 
     lines = [
         f"# Narrative Alpha Digest — {as_of.isoformat()}",
         "",
-        f"**Summary:** {emerging} emerging / {strengthening} strengthening / {consensus} consensus / {len(narratives)} total",
+        (
+            f"**Summary:** {stage_counts['Emerging']} emerging / "
+            f"{stage_counts['Strengthening']} strengthening / "
+            f"{stage_counts['Consensus']} consensus / {len(narratives)} total"
+        ),
         "",
     ]
 
     for nar in narratives:
         lines.extend(
             [
-                f"## [{nar.stage.value}] {nar.title}",
+                f"## [{nar.propagation_stage.value}] {nar.title}",
                 f"- **Subtitle:** {nar.subtitle}",
-                f"- **Strength Score:** {nar.strength_score}/100",
+                f"- **Signal Quality:** {nar.signal_quality}/100",
+                f"- **Propagation Breadth:** {nar.propagation_breadth}/100",
                 f"- **First Seen:** {nar.first_seen.isoformat()}",
-                f"- **Big-Cap Signal:** {nar.big_cap_signal}",
+                f"- **Parent Narrative:** {nar.parent_narrative or 'None'}",
+                f"- **Bellwether Signal:** {nar.bellwether_signal}",
                 f"- **Key Question:** {nar.key_question}",
                 "- **Source Trail:**",
             ]
         )
         for s in nar.source_trail:
-            lines.append(f"  - (Tier {s.source_tier}) {s.published_on.isoformat()} — {s.source_name}: {s.headline}")
+            lines.append(
+                f"  - (Tier {s.source_tier}, {s.source_format}) {s.published_on.isoformat()} — {s.source_name}: {s.headline}"
+            )
+
+        if nar.relationships:
+            lines.append("- **Narrative Relationships:**")
+            for rel in nar.relationships:
+                lines.append(f"  - {rel.relation_type} -> {rel.target_narrative} ({rel.note})")
 
         if nar.alpha_targets:
             lines.append("- **Alpha Targets:**")
             for t in nar.alpha_targets:
                 lines.append(
-                    f"  - {t.ticker} ({t.name}) | Thesis: {t.thesis} | Move since mapping: {t.pct_change:.2f}%"
+                    "  - "
+                    f"{t.ticker} ({t.name}) [{t.mapped_by}] | Abs: {t.absolute_return:.2f}% | "
+                    f"Sector-Rel: {t.sector_relative_return:.2f}% | Bench-Rel: {t.benchmark_relative_return:.2f}% | "
+                    f"BaseRate: {t.base_rate_return:.2f}% | Validated: {'YES' if t.validated else 'NO'}"
                 )
         else:
             lines.append("- **Alpha Targets:** none yet")
@@ -91,6 +113,6 @@ def run_pipeline(
 
     clusters = cluster_sources(sources)
     narratives = build_narratives(clusters, run_date, latest_prices, baseline_prices)
-    digest = render_markdown_digest(narratives, run_date)
+    digest = render_markdown_digest(narratives, run_date, changed_last_24h=bool(sources))
     output_markdown.write_text(digest)
     return narratives
