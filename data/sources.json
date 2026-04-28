@@ -1,0 +1,47 @@
+[
+  {
+    "source_id": "S1",
+    "source_name": "Bernstein Research",
+    "source_tier": 1,
+    "published_on": "2026-04-25",
+    "headline": "Inference GPU utilization and cost deflation entering a new phase",
+    "summary": "Analysts argue inference stack optimization will lower enterprise AI costs.",
+    "entities": ["CRDO", "ANET", "NVIDIA"]
+  },
+  {
+    "source_id": "S2",
+    "source_name": "The Information",
+    "source_tier": 2,
+    "published_on": "2026-04-27",
+    "headline": "AI inference vendors chase lower serving costs",
+    "summary": "Cloud buyers prioritize inference efficiency over training scale.",
+    "entities": ["ANET", "MSFT"]
+  },
+  {
+    "source_id": "S3",
+    "source_name": "Nikkei Asia",
+    "source_tier": 2,
+    "published_on": "2026-04-26",
+    "headline": "Japan semiconductor capex accelerates with new fab commitments",
+    "summary": "Japan policy and private investment lift semiconductor ecosystem spending.",
+    "entities": ["8035.T", "6857.T", "TSMC"]
+  },
+  {
+    "source_id": "S4",
+    "source_name": "Industry Expert Roundtable",
+    "source_tier": 1,
+    "published_on": "2026-04-24",
+    "headline": "Nuclear fuel contracting cycle tightens",
+    "summary": "Utilities are extending uranium contracts amid power-demand growth.",
+    "entities": ["CCJ", "BWXT"]
+  },
+  {
+    "source_id": "S5",
+    "source_name": "FinTwit",
+    "source_tier": 3,
+    "published_on": "2026-04-28",
+    "headline": "Nuclear is back trade everywhere",
+    "summary": "High social chatter around nuclear equities after policy headlines.",
+    "entities": ["CCJ"]
+  }
+]
